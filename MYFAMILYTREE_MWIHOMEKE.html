@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> days </title>
+    <link rel="stylesheet" href="JASIRICSS.css">
+    <style>
+        .ticker {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgb(15, 73, 7);
+            color: rgb(247, 239, 239);
+            overflow: hidden;
+            padding: 12px 0;
+        }
+
+        .ticker-text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll 20s linear infinite;
+        }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #c1dcbd, #3c8d2c);
+            text-align: center;
+        }
+
+        #loginPage {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            width: 360px;
+            max-width: 100%;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+            text-align: center;
+        }
+
+        .login-box h1 {
+            margin-top: 0;
+            color: #4a5449;
+            text-align: center;
+        }
+
+        .login-box p {
+            color: #555;
+            text-align: center;
+        }
+
+        .login-box label {
+            display: block;
+            text-align: center;
+            font-weight: bold;
+            margin: 15px 0 6px;
+        }
+
+        .login-box select,
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #aaa;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .login-box button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            border: 0;
+            border-radius: 8px;
+            background: #0f4907;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-box button:hover {
+            background: #176b0d;
+        }
+
+        #error {
+            color: #c62828;
+            font-weight: bold;
+            min-height: 20px;
+            margin-top: 15px;
+        }
+
+        #website {
+            display: none;
+        }
+
+        .logout-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+            padding: 9px 14px;
+            border: 0;
+            border-radius: 7px;
+            background: #c62828;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <section id="loginPage">
+        <div class="login-box">
+            <h1>Family Website</h1>
+            <p>Please enter your name and password.</p>
+
+            <form id="loginForm">
+                <label for="username">Name</label>
+                <input type="text" id="username" placeholder="Enter your name" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter password" required>
+
+                <button type="submit">Enter Website</button>
+                <div id="error"></div>
+            </form>
+        </div>
+    </section>
+
+    <section id="website">
+        <button class="logout-btn" onclick="logout()">Logout</button>
+        <nav>
+            <a href="KINDNESS_STORY_WEBSITE.html">kind</a>
+            <a href="fate.html">fate</a>
+            <a href="KINGDOM_OF_LIES_STORY.html">family Secret</a>
+            <a href="Ssm.html"> Story</a>
+        </nav>
+
+        <main>
+            <h2>Welcome</h2>
+            <p>
+                Welcome to our family website. Here you can
+                find information about our family and courses.
+            </p>
+        </main>
+
+        <footer>
+            <div class="ticker">
+                <div class="ticker-text">
+                    Welcome to our family website. Here you can
+                    find information about our family and courses
+                </div>
+            </div>
+        </footer>
+
+</body>
+
+
+</section>
+
+<script>
+    // Names allowed to enter the website.
+    const allowedNames = [
+        "naomi",
+        "neema",
+        "shammah",
+        "shanoni",
+        "faith"
+    ];
+
+    const correctPassword = "hihomeke";
+
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const name = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const error = document.getElementById("error");
+
+        if (!allowedNames.includes(name.toLowerCase().trim())) {
+            error.textContent = "You are not among the family of MwiHomeke.";
+        } else if (password !== correctPassword) {
+            error.textContent = "Wrong password. Please try again.";
+        } else {
+            document.getElementById("loginPage").style.display = "none";
+            document.getElementById("website").style.display = "block";
+            error.textContent = "";
+
+            // Remember login only while this browser tab is open.
+            sessionStorage.setItem("familyLoggedIn", "true");
+        }
+    });
+
+    function logout() {
+        sessionStorage.removeItem("familyLoggedIn");
+        document.getElementById("website").style.display = "none";
+        document.getElementById("loginPage").style.display = "flex";
+        document.getElementById("loginForm").reset();
+    }
+
+    // Keep the user logged in while this browser tab remains open.
+    if (sessionStorage.getItem("familyLoggedIn") === "true") {
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("website").style.display = "block";
+    }
+</script>
+
+</body>
+
+</html>
